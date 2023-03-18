@@ -1,0 +1,9 @@
+pluginManagement {
+    apply from: "versions.gradle"
+
+    plugins {
+        id "org.jetbrains.kotlin.jvm" version kotlinVersion
+    }
+}
+
+rootProject.name = "GradlePlugin"

@@ -1,21 +1,20 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.8.0"
-    id  "maven-publish"
+    id "org.jetbrains.kotlin.jvm"
+    id "maven-publish"
     id "java-gradle-plugin"
 }
 
+apply from: "versions.gradle"
+
 group = "dev.abd3lraouf.study"
-version = "1.0-SNAPSHOT"
-ext {
-    jvmTarget = "11"
-}
+version = pluginVersion
 
 
-sourceCompatibility = jvmTarget
-targetCompatibility = jvmTarget
+sourceCompatibility = jvmVersion
+targetCompatibility = jvmVersion
 
 compileKotlin {
-    kotlinOptions.jvmTarget = jvmTarget
+    kotlinOptions.jvmTarget = jvmVersion
 }
 
 repositories {
@@ -37,17 +36,17 @@ publishing {
     repositories {
         maven {
             name = "local"
-            url = uri("file://${rootProject.buildDir}/repo")
+            url = "file://${projectDir}/repo"
         }
     }
 }
+
 gradlePlugin {
     plugins {
-     testCoverageReporter {
-         id = "dev.abd3lraouf.study.test-coverage-reporter"
-         implementationClass = "dev.abd3lraouf.study.TestCoverageReporterPlugin"
-     }
-
+        testCoverageReporter {
+            id = "dev.abd3lraouf.study.testcoveragereporter"
+            implementationClass = "dev.abd3lraouf.study.testcoveragereporter.TestCoverageReporterPlugin"
+        }
     }
 }
 
@@ -55,4 +54,13 @@ dependencies {
     implementation gradleApi()
     // kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
+}
+
+afterEvaluate {
+    task cleanRepo(type: Delete) {
+        group = "build"
+        delete "file://${projectDir}/repo"
+    }
+
+    clean.dependsOn cleanRepo
 }

@@ -1,0 +1,15 @@
+pluginManagement {
+    apply from: "../versions.gradle"
+
+    plugins {
+        id "dev.abd3lraouf.study.testcoveragereporter" version pluginVersion
+    }
+
+    repositories {
+        maven {
+            url =  "../repo"
+        }
+        mavenCentral()
+    }
+
+}

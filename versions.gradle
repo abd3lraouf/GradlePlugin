@@ -1,0 +1,5 @@
+ext {
+    jvmVersion = 11
+    kotlinVersion = "1.8.0"
+    pluginVersion = "0.0.1"
+}

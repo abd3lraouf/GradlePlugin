@@ -1,0 +1,7 @@
+plugins {
+    id ("dev.abd3lraouf.study.testcoveragereporter")
+}
+
+testCoverageReporter {
+    message = "Hello from Gradle Plugin"
+}
