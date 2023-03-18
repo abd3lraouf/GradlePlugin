@@ -1,0 +1,58 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.8.0"
+    id  "maven-publish"
+    id "java-gradle-plugin"
+}
+
+group = "dev.abd3lraouf.study"
+version = "1.0-SNAPSHOT"
+ext {
+    jvmTarget = "11"
+}
+
+
+sourceCompatibility = jvmTarget
+targetCompatibility = jvmTarget
+
+compileKotlin {
+    kotlinOptions.jvmTarget = jvmTarget
+}
+
+repositories {
+    mavenCentral()
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = "sources"
+}
+
+publishing {
+    publications {
+        pluginMaven(MavenPublication) {
+            artifact sourceJar
+        }
+    }
+
+    repositories {
+        maven {
+            name = "local"
+            url = uri("file://${rootProject.buildDir}/repo")
+        }
+    }
+}
+gradlePlugin {
+    plugins {
+     testCoverageReporter {
+         id = "dev.abd3lraouf.study.test-coverage-reporter"
+         implementationClass = "dev.abd3lraouf.study.TestCoverageReporterPlugin"
+     }
+
+    }
+}
+
+dependencies {
+    implementation gradleApi()
+    // kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
+}
